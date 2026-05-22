@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# yarn
+.yarn.lock
+
 # production
 /build
 
@@ -31,7 +34,13 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
+.env.*.local
+
+# prisma
+prisma/*.db
+prisma/*.db-journal
 
 # vercel
 .vercel
@@ -39,6 +48,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Local Netlify folder
-.netlify

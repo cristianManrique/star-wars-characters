@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SWAPI Explorer
+
+> **Fan project — not affiliated with Lucasfilm or Disney.**
+
+A Star Wars character browser built with Next.js and GraphQL. Browse, search, create, edit and delete characters from the Star Wars universe. Built as a personal project to explore Next.js App Router, GraphQL with Apollo Client, TypeScript, custom React hooks, and component architecture inspired by real-world patterns.
+
+---
+
+## Tech Stack
+
+| Technology                   | Usage                             |
+| ---------------------------- | --------------------------------- |
+| Next.js 16 (App Router)      | Framework                         |
+| React 19                     | UI                                |
+| TypeScript 5                 | Strict typing                     |
+| Tailwind CSS 4               | Styling + custom SW color palette |
+| Apollo Client                | GraphQL client                    |
+| SWAPI GraphQL                | Star Wars API (read-only)         |
+| graphql-yoga                 | Local GraphQL server (API route)  |
+| react-day-picker             | Date picker in character form     |
+| Jest + React Testing Library | Unit and component tests          |
+| ESLint                       | Code quality                      |
+
+---
+
+## Features
+
+- **Full CRUD** — create, edit and delete characters
+- **Modal forms** — overlay with backdrop-blur, closes on Escape
+- **Confirm before delete** — dialog prevents accidental deletions
+- **Live search** — filter characters by name with 300ms debounce
+- **Animated star field** — 250 twinkling stars rendered on Canvas
+- **Custom scrollbar** — Star Wars yellow on all browsers
+- **Responsive layout** — adaptive grid, stacked action bar on mobile/tablet
+- **Route groups** — separate layouts for home and app sections
+
+---
+
+## Pages
+
+```
+/               → Landing page — no header, no scroll
+/characters     → Character list with full CRUD and search
+```
+
+---
+
+## Project Structure
+
+```
+app/
+  (marketing)/
+    page.tsx                        → Landing page
+  (app)/
+    layout.tsx                      → Shared layout: Header + Footer
+    characters/
+      page.tsx                      → Character list + search
+      components/
+        CharacterList.tsx           → Character grid
+        CharacterItem.tsx           → Individual card (React.memo)
+        CharacterForm.tsx           → Add/edit form (Escape key support)
+        CharacterFormModal.tsx      → Modal overlay for create & edit
+  _ui/
+    Loading.tsx                     → Reusable centered spinner
+    Error.tsx                       → Reusable error message
+    ConfirmDialog.tsx               → Confirmation dialog before delete
+  components/
+    StarField.tsx                   → Canvas animation — 250 twinkling stars
+    layout/
+      Header.tsx                    → Global dark navigation
+      Footer.tsx                    → Fan project disclaimer
+  hooks/
+    useDebounce.ts                  → Generic configurable debounce
+    useCharacterSearch.ts           → Name-based character filtering
+  api/
+    graphql/
+      route.ts                      → graphql-yoga server (in-memory CRUD)
+  layout.tsx                        → Root layout — fonts, StarField, Providers
+  globals.css                       → SW palette, yellow scrollbar, loader
+  providers.tsx                     → ApolloProvider wrapper
+
+lib/
+  apolloClient.ts                   → Apollo Client instance
+  queries.ts                        → GraphQL queries and mutations
+  swapi.ts                          → Initial fetch from swapi-graphql.netlify.app
+
+types/
+  character.ts                      → Shared Character type
+
+__test__/
+  CharacterForm.test.tsx
+  CharacterList.test.tsx
+  smoke.test.ts
+```
+
+---
+
+## GraphQL Strategy
+
+- **GET queries** → real network call to `swapi-graphql.netlify.app` on server startup
+- **Mutations (create / update / delete)** → handled in-memory via `graphql-yoga`
+
+> SWAPI is read-only. Mutations demonstrate the full CRUD pattern without server-side persistence — data resets on server restart.
+
+---
+
+## Learning Goals
+
+1. **App Router** — route groups `(marketing)` / `(app)`, nested layouts
+2. **GraphQL** — queries, mutations, Apollo cache, MockedProvider in tests
+3. **TypeScript** — strict types, `import type`, typed props
+4. **Custom hooks** — `useDebounce`, `useCharacterSearch` with `useMemo`
+5. **Performance** — `React.memo`, `useCallback`, debounce
+6. **Canvas API** — `requestAnimationFrame` animation loop, cleanup on unmount
+7. **Jest + RTL** — render, userEvent, MockedProvider
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn && yarn start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opens [http://localhost:3000](http://localhost:3000) automatically in your default browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+yarn start          # Start dev server + open browser
+yarn build          # Production build
+yarn lint           # Run ESLint
+yarn test           # Run tests
+yarn test:watch     # Run tests in watch mode
+yarn test:coverage  # Run tests with coverage report
+```
