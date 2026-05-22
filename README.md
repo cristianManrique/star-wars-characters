@@ -4,6 +4,17 @@
 
 A Star Wars character browser built with Next.js and GraphQL. Browse, search, create, edit and delete characters from the Star Wars universe. Built as a personal project to explore Next.js App Router, GraphQL with Apollo Client, TypeScript, custom React hooks, and component architecture inspired by real-world patterns.
 
+
+---
+## Screens
+
+<img width="1251" height="863" alt="Screenshot 2026-05-22 163109" src="https://github.com/user-attachments/assets/8c9b2c7e-095b-4c02-96ee-4bded3f1588a" />
+
+
+<img width="1411" height="867" alt="Screenshot 2026-05-22 163238" src="https://github.com/user-attachments/assets/0dbafb48-6367-4801-8d00-2e058483f618" />
+
+
+
 ---
 
 ## Tech Stack
